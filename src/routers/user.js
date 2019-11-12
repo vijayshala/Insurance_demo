@@ -33,6 +33,15 @@ router.get('/users', async (req, res) => {
     }
 })
 
+router.get('/allUsers', async (req, res) => {
+    try {
+        let users = await User.find();
+        res.send(users)
+    } catch (e) {
+        res.status(400).send({successToken})
+    }
+})
+
 router.get('/users/:id', async (req, res) => {
     const _id = req.params.id
 
