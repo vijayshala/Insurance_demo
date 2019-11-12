@@ -1,10 +1,13 @@
 const express = require('express')
 const User = require('../models/user')
+var cors = require('cors');
 const router = new express.Router()
 
-router.post('/users', async (req, res) => {
-    const user = new User(req.body)
+const app = express()
+app.use(cors());
 
+router.post('/users', cors(), async (req, res) => {
+    const user = new User(req.body)
     try {
         await user.save()
         res.status(201).send(user)
@@ -17,12 +20,16 @@ router.get('/users', async (req, res) => {
     
     const email = req.query.email
     const password = req.query.password
-    try {
-        const users = await User.findOne({password})
 
-        res.send(users ? "success : true" : "success : false" )
+    console.log(password)
+    try {
+        let users = await User.findOne({password});
+        const successToken = users ? "true" : "false" ;
+        //res.send(users ? "success : true" : "success : false" , users );
+        res.send({successToken ,  users})
+        //res.status(500).send(users ? "success : true" : "success : false" , users);
     } catch (e) {
-        res.status(500).send()
+        res.status(400).send({successToken})
     }
 })
 
@@ -79,3 +86,12 @@ router.delete('/users/:id', async (req, res) => {
 })
 
 module.exports = router
+
+
+// modal for creating policy
+// title: ['',Validators.required],
+//     description: ['',Validators.required],
+//     cover_amount: ['',Validators.required],    
+//     base_amount_for_person:['',Validators.required],
+//     disabled_person:['true',[Validators.required]],
+//     medical_history:['true',Validators.required]
