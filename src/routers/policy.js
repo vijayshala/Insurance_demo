@@ -42,6 +42,18 @@ router.get('/polices/:id', async (req, res) => {
     }
 })
 
+router.get('/searchPolicies', async (req, res) => {
+    const disabled_person = req.query.disabled_person
+    const medical_history = req.query.medical_history
+    try {
+        let user = await User.find({disabled_person,medical_history });
+        res.send(user)
+    } catch (e) {
+        res.status(400).send()
+    }
+})
+
+
 router.patch('/polices/:id', async (req, res) => {
     const updates = Object.keys(req.body)
     const allowedUpdates = ['name', 'email', 'password', 'age']

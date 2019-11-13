@@ -20,8 +20,7 @@ router.get('/users', async (req, res) => {
     
     const email = req.query.email
     const password = req.query.password
-
-    console.log(password)
+ 
     try {
         let users = await User.findOne({password});
         const successToken = users ? "true" : "false" ;

@@ -24,12 +24,10 @@ const Policy = mongoose.model('Policy', {
     },
     disabled_person: {
         type: String,
-        required: true,
         trim: true
     },
     medical_history: {
         type: String,
-        required: true,
         trim: true
     }
 })

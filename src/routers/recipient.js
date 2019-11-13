@@ -20,7 +20,7 @@ router.get('/allRecipient', async (req, res) => {
     const user_id = req.query.user_id
     console.log(user_id)
     try {
-        let recipients = await Recipient.find({user_id});
+        let recipients = await Recipient.find();
         res.send(recipients)
     } catch (e) {
         res.status(400).send()
